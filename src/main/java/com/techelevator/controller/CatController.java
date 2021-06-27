@@ -5,6 +5,7 @@ import com.techelevator.model.CatCard;
 import com.techelevator.model.CatCardNotFoundException;
 import com.techelevator.services.CatFactService;
 import com.techelevator.services.CatPicService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class CatController {
         return true;
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/api/cards/{id}", method = RequestMethod.DELETE)
     public boolean deleteCard(@PathVariable long id) throws CatCardNotFoundException {
         catCardDao.delete(id);

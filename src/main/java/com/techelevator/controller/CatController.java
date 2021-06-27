@@ -2,16 +2,14 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.CatCardDao;
 import com.techelevator.model.CatCard;
-import com.techelevator.model.CatFact;
-import com.techelevator.model.CatPic;
+import com.techelevator.model.CatCardNotFoundException;
 import com.techelevator.services.CatFactService;
 import com.techelevator.services.CatPicService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class CatController {
 
     private CatCardDao catCardDao;
@@ -25,15 +23,14 @@ public class CatController {
     }
 
     @RequestMapping(path = "/api/cards/random", method = RequestMethod.GET)
-    public CatCard getRandomCard() {
+    public CatCard getNewCard() {
         CatCard c = new CatCard();
 
-        String fact = catFactService.getFact().getText();
+        String fact = catFactService.getFact().getFact();
         String imgUrl = catPicService.getPic().getFile();
 
         c.setCatFact(fact);
         c.setImgUrl(imgUrl);
-        c.setCatCardId(makeRandomId());
 
         return c;
     }
@@ -44,24 +41,26 @@ public class CatController {
     }
 
     @RequestMapping(path = "/api/cards/{id}", method = RequestMethod.GET)
-    public CatCard getCard(@PathVariable long id) {
+    public CatCard getCard(@PathVariable long id) throws CatCardNotFoundException {
         return catCardDao.get(id);
     }
 
+    @RequestMapping(path = "/api/cards", method = RequestMethod.POST)
+    public boolean saveCard(@RequestBody CatCard c) {
+        catCardDao.save(c);
+        return true;
+    }
 
+    @RequestMapping(path = "/api/cards/{id}", method = RequestMethod.PUT)
+    public boolean updateCard(@PathVariable long id, @RequestBody CatCard c) throws CatCardNotFoundException {
+        catCardDao.update(id, c);
+        return true;
+    }
 
-    //Need POST, PUT, DELETE methods still
-
-
-
-    private long makeRandomId() {
-        int maxID = 0;
-        for (CatCard c : catCardDao.list()) {
-            if (c.getCatCardId() > maxID) {
-                maxID = Math.toIntExact(c.getCatCardId());
-            }
-        }
-        return maxID;
+    @RequestMapping(path = "/api/cards/{id}", method = RequestMethod.DELETE)
+    public boolean deleteCard(@PathVariable long id) throws CatCardNotFoundException {
+        catCardDao.delete(id);
+        return true;
     }
 
 }

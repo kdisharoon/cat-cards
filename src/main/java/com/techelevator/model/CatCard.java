@@ -15,6 +15,7 @@ public class CatCard {
 	public Long getCatCardId() {
 		return catCardId;
 	}
+
 	public void setCatCardId(Long catCardId) {
 		this.catCardId = catCardId;
 	}
@@ -22,6 +23,7 @@ public class CatCard {
 	public String getCatFact() {
 		return catFact;
 	}
+
 	public void setCatFact(String catFact) {
 		this.catFact = catFact;
 	}
@@ -29,6 +31,7 @@ public class CatCard {
 	public String getImgUrl() {
 		return imgUrl;
 	}
+
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
@@ -36,6 +39,7 @@ public class CatCard {
 	public String getCaption() {
 		return caption;
 	}
+
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}

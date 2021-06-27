@@ -3,10 +3,10 @@ package com.techelevator.model;
 public class CatFact {
 	private String fact;
 
-	public String getText() {
+	public String getFact() {
 		return fact;
 	}
-	public void setText(String fact) {
+	public void setFact(String fact) {
 		this.fact = fact;
 	}	
 }

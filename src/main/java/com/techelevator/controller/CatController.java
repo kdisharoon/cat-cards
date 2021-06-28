@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RequestMapping("/api/cards")
 @RestController
 public class CatController {
 
@@ -23,7 +23,7 @@ public class CatController {
         this.catPicService = catPicService;
     }
 
-    @RequestMapping(path = "/api/cards/random", method = RequestMethod.GET)
+    @RequestMapping(path = "/random", method = RequestMethod.GET)
     public CatCard getNewCard() {
         CatCard c = new CatCard();
 
@@ -36,30 +36,30 @@ public class CatController {
         return c;
     }
 
-    @RequestMapping(path = "/api/cards", method = RequestMethod.GET)
+    @RequestMapping(path = "", method = RequestMethod.GET)
     public List<CatCard> getAllCards() {
         return catCardDao.list();
     }
 
-    @RequestMapping(path = "/api/cards/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public CatCard getCard(@PathVariable long id) throws CatCardNotFoundException {
         return catCardDao.get(id);
     }
 
-    @RequestMapping(path = "/api/cards", method = RequestMethod.POST)
+    @RequestMapping(path = "", method = RequestMethod.POST)
     public boolean saveCard(@RequestBody CatCard c) {
         catCardDao.save(c);
         return true;
     }
 
-    @RequestMapping(path = "/api/cards/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public boolean updateCard(@PathVariable long id, @RequestBody CatCard c) throws CatCardNotFoundException {
         catCardDao.update(id, c);
         return true;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(path = "/api/cards/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public boolean deleteCard(@PathVariable long id) throws CatCardNotFoundException {
         catCardDao.delete(id);
         return true;

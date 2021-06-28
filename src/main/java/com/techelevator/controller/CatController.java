@@ -8,6 +8,7 @@ import com.techelevator.services.CatPicService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 @RequestMapping("/api/cards")
 @RestController
@@ -47,15 +48,15 @@ public class CatController {
     }
 
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public boolean saveCard(@RequestBody CatCard c) {
+    public CatCard saveCard(@RequestBody @Valid CatCard c) {
         catCardDao.save(c);
-        return true;
+        return c;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public boolean updateCard(@PathVariable long id, @RequestBody CatCard c) throws CatCardNotFoundException {
+    public CatCard updateCard(@PathVariable @Valid long id, @RequestBody @Valid CatCard c) throws CatCardNotFoundException {
         catCardDao.update(id, c);
-        return true;
+        return getCard(id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
